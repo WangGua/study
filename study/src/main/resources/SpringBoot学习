@@ -2,5 +2,7 @@ SpringBoot启动过程
 1.初始化SpringApplication对象
   1.1判断当前的环境是web应用还是标准的standalone应用，如果当前环境能够成功加	载到"javax.servlet.Servlet"和"org.springframework.web.context.Conf
   igurableWebApplicationContext"，则说明当前的环境是web环境。
-  1.2查找出当前工程中的实现了ApplicationContextInitializer的类，这些初始化类会在spring容器刷新（refresh）之前执行（回调函数），可以根据@Order注解来
-  指定执行的顺序，开发也可以自己实现ApplicationContextInitializer接口，然后在启动的时候加载到SpringApplication的对象中就可以了。
+  1.2查找出当前工程中的实现了ApplicationContextInitializer的类的实例，这些对象会在spring容器刷新（refresh）之前执行（回调函数），可以根据@Order注解来
+     指定执行的顺序，开发也可以自己实现ApplicationContextInitializer接口，然后在启动的时候加载到SpringApplication的对象中就可以了。
+  1.3查找并加载工程中实现了ApplicationListener接口的类的对象，这些监听会监听各自所对应的事件（ApplicationEvent），当SpringApplication在运行时，一旦
+     触发了某些事件，那么监听器的内容就会被触发执行。目前初始化SpringApplication对象时，会初始化13种类型的监听对象。
