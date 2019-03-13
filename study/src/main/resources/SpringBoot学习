@@ -6,3 +6,12 @@ SpringBoot启动过程
      指定执行的顺序，开发也可以自己实现ApplicationContextInitializer接口，然后在启动的时候加载到SpringApplication的对象中就可以了。
   1.3查找并加载工程中实现了ApplicationListener接口的类的对象，这些监听会监听各自所对应的事件（ApplicationEvent），当SpringApplication在运行时，一旦
      触发了某些事件，那么监听器的内容就会被触发执行。目前初始化SpringApplication对象时，会初始化13种类型的监听对象。
+  1.4获取到mian方法所在的类的Class类的对象，通过StackTraceElement[] stackTrace = new RuntimeException().getStackTrace()方法获取，此类能够获取到
+     程序运行到目前为止，经历过的所有方法，其中就包括入口main方法。
+ 
+2.执行SpringApplication内的run方法
+  2.1初始化StopWatch的实例，用来统计启动的一些时间。
+  2.2定义ConfigurableApplicationContext，此时还为空。
+  2.3开启headless模式。
+  2.4获取到SpringApplicationRunListeners的对象，此时的监听器集合中只有一个EventPublishingRunListener，并且已经进行了初始化，初始化时，步骤1.3所获得
+     的所有ApplicationListener对象都装载到了EventPublishingRunListener实例的SimpleApplicationEventMulticaster中。
